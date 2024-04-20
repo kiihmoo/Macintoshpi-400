@@ -1,0 +1,31 @@
+How to:
+
+As i was impressed by the work of Jaromaz (https://github.com/jaromaz/MacintoshPi) i really wanted it to work for my Pi4, or espescially Pi400
+after alot of tries i made it work, at leaast for OS9 which was important for me.
+
+
+Steps has been:
+1) Downloading latest Rasperry OS (Raspberry Lite OS 64bit, 20.04.2024) 
+
+2) Preloading it, with SSH , WIFI and Password
+
+3) Login in, checking Wifi IP, to proceed via SSG
+
+4) sudo apt install -y automake gobjc libudev-dev xa65 build-essential byacc texi2html flex \
+                    libreadline-dev libxaw7-dev texinfo libxaw7-dev libgtk2.0-cil-dev \
+                    libgtkglext1-dev libpulse-dev bison libnet1 libnet1-dev libpcap0.8 \
+                    libpcap0.8-dev libvte-dev libasound2-dev raspberrypi-kernel-headers
+5) sudo apt install -y libdirectfb-dev automake gobjc libudev-dev xa65 build-essential \
+                    alsa-oss osspd byacc texi2html flex libreadline-dev libxaw7-dev \
+                    texinfo libxaw7-dev libgtk2.0-cil-dev libgtkglext1-dev libpulse-dev \
+                    bison libnet1 libnet1-dev libpcap0.8 libpcap0.8-dev libvte-dev \
+                    libasound2-dev raspberrypi-kernel-headers build-essential git \
+                    libgtk2.0-dev x11proto-xf86dga-dev libxxf86dga-dev \
+                    libxxf86dga1 libsdl1.2-dev
+6) sudo apt-get install libfreetype6-dev libgl1-mesa-dev libgles2-mesa-dev libdrm-dev \
+                    libgbm-dev libudev-dev libasound2-dev liblzma-dev libjpeg-dev \
+                    libtiff-dev libwebp-dev git build-essential
+7) sudo apt-get install gir1.2-ibus-1.0 libdbus-1-dev libegl1-mesa-dev libibus-1.0-5 libibus-1.0-dev \
+                    libice-dev libsm-dev libsndio-dev libwayland-bin libwayland-dev libxi-dev libxinerama-dev \
+                    libxkbcommon-dev libxrandr-dev libxss-dev libxt-dev libxv-dev x11proto-randr-dev \
+                    x11proto-scrnsaver-dev x11proto-video-dev x11proto-xinerama-dev
