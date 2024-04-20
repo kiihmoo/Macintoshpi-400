@@ -37,10 +37,18 @@ Steps has been:
   d) cd SDL2
   e) tar zxvf SDL2-2.30.2.tar.gz 
   f) cd SDL2-2.30.2/
-  g) ./configure --enable-video-kmsdrm --disable-video-opengl --disable-video-x11 --disable-video-rpi &&
+  g) ./configure --disable-video-opengl \
+            --disable-video-x11 \
+            --disable-pulseaudio \
+            --disable-esd \
+            --disable-video-wayland \
+            --enable-video-kmsdrm \
+            --enable-alsa \
+            --enable-audio &&
       make -j$(nproc) &&
       sudo make install
   h)wait some time (like 5minutes)
+  i) export SDL_VIDEODRIVER=kmsdrm
 
 6) Compile Sheepshaver
   a) create new dir any place; mkdir OS9-Sheep
@@ -55,7 +63,8 @@ Steps has been:
             --enable-sdl-framework \
             --without-gtk \
             --without-mon \
-            --without-esd
+            --without-esd \
+            --enable-addressing=direct,0x10000000
   h) make -j3
   i) sudo make install
   j) grep -q mmap_min_addr /etc/sysctl.conf || \
@@ -68,4 +77,4 @@ Steps has been:
   d) wget https://smb4.s3.us-west-2.amazonaws.com/sheepshaver/apple_roms/newworld86.rom.zip
   e) unzip newworld86.rom.zip
   f) touch os9.run
-  g) 
+  g) SheepShaver --rom newworld86.rom --ramsize 134217728 --disk bootdisk --frameskip 2 --nosound false --nocdrom false --jit false --dsp /dev/dsp --screen win/1920/1080
