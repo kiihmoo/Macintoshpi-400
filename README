@@ -11,21 +11,61 @@ Steps has been:
 
 3) Login in, checking Wifi IP, to proceed via SSG
 
-4) sudo apt install -y automake gobjc libudev-dev xa65 build-essential byacc texi2html flex \
+4) Package Reqirement
+  a)sudo apt install -y automake gobjc libudev-dev xa65 build-essential byacc texi2html flex \
                     libreadline-dev libxaw7-dev texinfo libxaw7-dev libgtk2.0-cil-dev \
                     libgtkglext1-dev libpulse-dev bison libnet1 libnet1-dev libpcap0.8 \
                     libpcap0.8-dev libvte-dev libasound2-dev raspberrypi-kernel-headers
-5) sudo apt install -y libdirectfb-dev automake gobjc libudev-dev xa65 build-essential \
+  b)sudo apt install -y libdirectfb-dev automake gobjc libudev-dev xa65 build-essential \
                     alsa-oss osspd byacc texi2html flex libreadline-dev libxaw7-dev \
                     texinfo libxaw7-dev libgtk2.0-cil-dev libgtkglext1-dev libpulse-dev \
                     bison libnet1 libnet1-dev libpcap0.8 libpcap0.8-dev libvte-dev \
                     libasound2-dev raspberrypi-kernel-headers build-essential git \
                     libgtk2.0-dev x11proto-xf86dga-dev libxxf86dga-dev \
                     libxxf86dga1 libsdl1.2-dev
-6) sudo apt-get install libfreetype6-dev libgl1-mesa-dev libgles2-mesa-dev libdrm-dev \
+  c)sudo apt-get install libfreetype6-dev libgl1-mesa-dev libgles2-mesa-dev libdrm-dev \
                     libgbm-dev libudev-dev libasound2-dev liblzma-dev libjpeg-dev \
                     libtiff-dev libwebp-dev git build-essential
-7) sudo apt-get install gir1.2-ibus-1.0 libdbus-1-dev libegl1-mesa-dev libibus-1.0-5 libibus-1.0-dev \
+  d)sudo apt-get install gir1.2-ibus-1.0 libdbus-1-dev libegl1-mesa-dev libibus-1.0-5 libibus-1.0-dev \
                     libice-dev libsm-dev libsndio-dev libwayland-bin libwayland-dev libxi-dev libxinerama-dev \
                     libxkbcommon-dev libxrandr-dev libxss-dev libxt-dev libxv-dev x11proto-randr-dev \
                     x11proto-scrnsaver-dev x11proto-video-dev x11proto-xinerama-dev
+5) Compile SDL2 from Source with KMSDRM
+  a) wget https://libsdl.org/release/SDL2-2.30.2.tar.gz
+  b) mkdir SDL2
+  c) mv SDL2-2.30.2.tar.gz SDL2
+  d) cd SDL2
+  e) tar zxvf SDL2-2.30.2.tar.gz 
+  f) cd SDL2-2.30.2/
+  g) ./configure --enable-video-kmsdrm --disable-video-opengl --disable-video-x11 --disable-video-rpi &&
+      make -j$(nproc) &&
+      sudo make install
+  h)wait some time (like 5minutes)
+
+6) Compile Sheepshaver
+  a) create new dir any place; mkdir OS9-Sheep
+  b) git clone https://github.com/kanjitalk755/macemu
+  c) cd macemu
+  d) cd SheepShaver
+  e) make links
+  f) cd src/Unix 
+  g) NO_CONFIGURE=1 ./autogen.sh &&
+    ./configure --enable-sdl-audio \
+            --enable-sdl-video \
+            --enable-sdl-framework \
+            --without-gtk \
+            --without-mon \
+            --without-esd
+  h) make -j3
+  i) sudo make install
+  j) grep -q mmap_min_addr /etc/sysctl.conf || \
+      echo "vm.mmap_min_addr = 0" | sudo tee -a /etc/sysctl.conf
+  k) reboot
+7) Prepare OS9 to boot
+  a) create folder: mkdir os9-run
+  b) cd os9-run
+  c) dd if=/dev/random of=bootdisk bs=1048576 count=4000
+  d) wget https://smb4.s3.us-west-2.amazonaws.com/sheepshaver/apple_roms/newworld86.rom.zip
+  e) unzip newworld86.rom.zip
+  f) touch os9.run
+  g) 
